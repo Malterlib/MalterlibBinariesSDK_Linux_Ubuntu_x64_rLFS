@@ -1,0 +1,24 @@
+Linux SDK - Redistribution Boundary Notice
+==========================================
+
+This SDK redistributes headers, libraries, object files, startup files, and
+other materials from Ubuntu and Debian packages. The distributor of this SDK is
+responsible for complying with the licenses that apply to the SDK artifact
+itself, including providing the included license notices, modification notices,
+and corresponding source/package metadata shipped with this SDK.
+
+Developers who use this SDK may have separate legal obligations when they
+distribute applications, libraries, or other binaries built with it. Those
+obligations depend on what they distribute and how they link it.
+
+In particular, this SDK includes static libraries (*.a) and object/startup
+files (*.o). That is intentional: this artifact is a general Linux sysroot, not
+a curated "copyleft-safe" subset. Using those files in distributed binaries can
+create additional license obligations for the downstream distributor under the
+applicable component licenses, including copyleft licenses such as the LGPL or
+GPL.
+
+This notice is informational only and does not replace the actual license terms
+for any component. See LICENSE, Licenses/, MODIFICATIONS.txt, and
+SourceMetadata/ for the governing notices and source-package information. See
+SOURCE-ACCESS.txt for the general source retrieval path.

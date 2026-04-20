@@ -1,0 +1,78 @@
+This SDK contains unmodified files and mechanically transformed shared libraries.
+
+Shared libraries matching *.so and *.so.* were copied from the Ubuntu/Debian
+distribution installed on the build machine and then rewritten with:
+
+  SourceMetadata/BuildLinuxSDK.sh
+
+The transformation keeps ELF metadata needed for linking and removes most other
+sections using objcopy.
+
+Build snapshot: 20260422T000000Z
+Architecture: x86_64
+
+Distribution info:
+Distributor ID:	Ubuntu
+Description:	Ubuntu 22.04.5 LTS
+Release:	22.04
+Codename:	jammy
+
+Reproducing this SDK
+--------------------
+
+The full container-based reproduction harness is bundled next to the
+generator script:
+
+  SourceMetadata/BuildLinuxSDK.sh              - build script (runs inside a
+                                                 matching Linux container)
+  SourceMetadata/BuildLinuxSDKContainers.sh    - multi-arch Docker driver
+                                                 (registers QEMU binfmt, builds
+                                                 each arch sequentially)
+  SourceMetadata/Docker/<Distro>/Dockerfile    - per-distro base images
+
+Typical flow on a Linux host with Docker + buildx:
+
+  cd SourceMetadata
+  ./BuildLinuxSDKContainers.sh                    # build all configured arches
+  ./BuildLinuxSDKContainers.sh Ubuntu:arm64       # or build a single arch
+
+When run from a standalone SDK distribution the driver detects the adjacent
+Docker/ directory and defaults the output to SourceMetadata/RebuiltSDK; set
+BINARIES_ROOT=/path/to/output to redirect it elsewhere, or edit Distros /
+BinariesRoot at the top of the script for more involved customisation.
+
+The Dockerfiles under Docker/<Distro>/ pin their base images by digest, so a
+rebuild from this bundle reproduces against the same Ubuntu / Debian base
+that produced these binaries regardless of later registry retagging.
+
+Use BuildLinuxSDKContainers.sh to reproduce. BuildLinuxSDK.sh is the
+inner build script and is intended to be invoked by the driver inside
+a fresh container. Running it directly on a developer host is NOT
+supported: the script mutates apt state (snapshot pinning, proxy
+configuration, third-party repos) and does not unwind those changes
+on rerun, so the host's apt configuration drifts and subsequent
+operations on that host can break in non-obvious ways. The
+container-based path keeps every mutation inside a one-shot
+container and is the only path that produces reproducible SDK
+output.
+
+Reproducible apt package versions
+---------------------------------
+
+BuildLinuxSDK.sh pins apt to a specific snapshot date so every rebuild
+installs the same Ubuntu and Debian package versions that produced the
+shipped SDK. The date is hardcoded in BuildLinuxSDKContainers.sh.
+
+Override the date by exporting APT_SNAPSHOT_DATE=<YYYYMMDDTHHMMSSZ> before
+running the driver. Set APT_SNAPSHOT_DATE="" (empty) to disable snapshot
+pinning and build against the current live archives.
+
+LLVM toolchain
+--------------
+
+The LLVM runtime packages (libc++, libunwind) are installed from
+apt.llvm.org and pinned at the major-version level. The exact point
+release may vary between rebuilds as upstream ships updates. LLVM is
+licensed under Apache-2.0 with the LLVM exception, which does not require
+reproducible or corresponding source for redistributed binaries.
+

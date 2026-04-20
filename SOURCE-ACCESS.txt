@@ -1,0 +1,28 @@
+Linux SDK - Source Access
+=========================
+
+Corresponding source package metadata for this SDK is recorded in:
+
+  SourceMetadata/PackageVersions.tsv
+  SourceMetadata/SourcePackageLinks.tsv
+  SourceMetadata/FilePackageVersions.tsv
+
+Source packages are mirrored in a separate source repository rooted at:
+
+  https://github.com/Malterlib/MalterlibBinariesSDK_Linux_DebianBased_Source_rLFS.git
+
+Source manifest URLs target branch:
+
+  master
+
+The TSV manifests record exact source package names, versions, and repository
+paths. If the source repository uses pointer files or a bootstrap workflow to
+materialize large artifacts, that retrieval method is part of the repository's
+normal access path and applies uniformly to all mirrored source packages.
+
+For source access instructions, start at the source repository root and follow
+its bootstrap/README documentation.
+
+If the automated source access path is unavailable, contact:
+
+  info@malterlib.org
