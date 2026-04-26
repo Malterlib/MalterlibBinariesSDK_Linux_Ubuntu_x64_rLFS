@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:864c2e3e6c9b86dd0b3dc303a30f2db8a73719f211c336175176a7dd45045842
-size 132
+/* GNU ld script
+*/
+OUTPUT_FORMAT(elf64-x86-64)
+GROUP ( /usr/lib/x86_64-linux-gnu/libm-2.35.a /usr/lib/x86_64-linux-gnu/libmvec.a )

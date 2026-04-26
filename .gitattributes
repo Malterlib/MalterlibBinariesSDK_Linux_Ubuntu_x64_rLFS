@@ -3,4 +3,19 @@
 *.so.* filter=lfs diff=lfs merge=lfs -text
 *.a filter=lfs diff=lfs merge=lfs -text
 *.o filter=lfs diff=lfs merge=lfs -text
+
+# Linker scripts (text) packaged with the same name as binary libraries.
+/Linux.sdk/usr/lib/libanl.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libc.so -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libdl.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libm.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libm.so -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libpthread.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libpthread_nonshared.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/librt.a -filter=lfs -diff=lfs -merge=lfs
+/Linux.sdk/usr/lib/libutil.a -filter=lfs -diff=lfs -merge=lfs
+**/libgcc_s.so -filter=lfs -diff=lfs -merge=lfs
+
+# Image assets that should be tracked via Git LFS.
+*.png filter=lfs diff=lfs merge=lfs -text
 # END: Malterlib Linux SDK - binary artifacts tracked via Git LFS
